@@ -9,12 +9,14 @@ import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
+import  { Modal } from "./component/modal";
 import { Footer } from "./component/footer";
 
 
 import { Register } from "./pages/register";
 import { LogIn } from "./pages/logIn";
 import { Sesion } from "./pages/sesion";
+import { MdOutlineAddAlarm, MdOutlineAddAlert } from "react-icons/md";
 
 //create your first component
 const Layout = () => {
@@ -36,6 +38,7 @@ const Layout = () => {
                         <Route element={<Register />} path="/register" />
                         <Route element={<LogIn />} path="/login" />
                         <Route element={<Sesion />} path="/sesion" />
+                        <Route element={<Modal />} path="/modal" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

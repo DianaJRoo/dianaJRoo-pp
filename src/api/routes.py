@@ -90,30 +90,7 @@ def protected():
     user = User.query.filter_by(email=current_user).one_or_none()
     return jsonify(user.serialize()), 200
 
-@api.route('/login', methods=['POST'])
-def login():
-    user_name = request.json.get('user_name', None)
-    password = request.json.get('password', None)
 
-    if not user_name or not password:
-        return jsonify({'msg': 'username and password required'}), 400
-    
-    user = User.query.filter_by(user_name=user_name).one_or_none()
-    
-    if user is not None:
-        check = bcrypt.checkpw(bytes(password, 'utf-8'), bytes(user.password, 'utf-8'))
-        if check:
-            access_token = create_access_token(identity=user_name)
-            return jsonify({'token': access_token, 'identity': user.serialize()}), 200
-        else:
-            return jsonify({'msg': 'wrong password'}), 404
-    else:
-        return jsonify({'msg': 'user not found'}), 404
-    
-
-from flask import request, jsonify
-from flask_jwt_extended import create_access_token
-import bcrypt
 
 @api.route('/login', methods=['POST'])
 def login():

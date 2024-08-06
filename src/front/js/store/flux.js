@@ -3,6 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			token: null,
 			message: null,
+			favorites: [],
 			demo: [
 				{
 					title: "FIRST",
@@ -152,6 +153,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ userToken: "" })
 				window.location.href = '/hero'
 			},
+
+			
 
 
 

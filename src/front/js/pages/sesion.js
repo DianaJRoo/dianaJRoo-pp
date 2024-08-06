@@ -1,111 +1,130 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { FaHeart, FaRegBookmark, FaRegCommentDots, FaShare } from 'react-icons/fa';
+import { Link, useNavigate } from 'react-router-dom';
 
+import {Navbar} from '../component/navbar';
 
 
 
 export const Sesion = () => {
-   
+    const navigate = useNavigate()
+
+    const handleLogout = () => {
+      
+        navigate('/'); 
+      };
+    
+
+
+    return (
+
+     
+        
+        <div className="flex flex-col min-h-screen">
+            <Navbar />
+            {/* Contenedor Principal con dos mitades */}
+            <div className="flex flex-1 p-10 ">
+                {/* Primera Mitad: Post de Instagram */}
+                <div className="border border-gray-200 rounded-lg shadow-lg overflow-hidden" style={{ width: '30rem', height: '35rem' }}>
+                    <div className="flex items-center justify-between p-2 bg-gray-100" >
+                        <div className="flex items-center">
+                            <span className="text-gray-500 text-xl mr-2 p-0">
+                                <div class="h-10 w-10 text-gray-600 rounded-full overflow-hidden ">
 
 
 
-    return <>
 
-        <div id='hero-body' className="flex flex-col sm:flex-row mx-auto px-4 md:px-8 lg:px-16 xl:px-20 py-20 min-h-screen mt-0 mb-0 " style={{ backgroundImage: 'url("https://i.pinimg.com/736x/d2/10/34/d21034e458359dd4ad8fdf312613b597.jpg")', backgroundSize: 'cover', backgroundPosition: 'center', height: '100vh' }}>
+                                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
+                                    </svg>
 
-            <div id='hero' className='d-flex  justify-center'style={{ width: '55rem', }}  >
-                <div className="  card w-full max-w-xl rounded-lg  overflow-y-scroll h-full shadow-lg flex hover:scale-110 transition-transform duration-300 ease-in-out bg-slate-100" >
 
-                    <div className="px-6 py-4 ">
-                        <div className="font-bold text-sm leading-relaxed ">
-                            
-                            How many days did I spend <br/>
-                            Thinkin' 'bout how you did me wrong, wrong, wrong?<br/>
-                            Lived in the shade you were throwin'<br/>
-                            'Til all of my sunshine was gone, gone, gone<br/>
-                            And I couldn't get away from you<br/>
-                            In my feelings more than Drake, so yeah<br/>
-                            Your name on my lips, tongue tied<br/>
-                            Free rent, livin' in my mind<br/>
-                            But then something happened one magical night<br/><br/>
-                            
-                            
-                            I forgot that you existed<br/>
-                            And I thought that it would kill me, but it didn't<br/>
-                            And it was so nice<br/>
-                            So peaceful and quiet<br/><br/>
-                           
-                            I forgot that you existed<br/>
-                            It isn't love, it isn't hate<br/>
-                            It's just indifference<br/><br/>
+                                </div>
 
-                            I forgot that you<br/>
-                            Got out some popcorn<br/>
-                            As soon as my rep starting going down, down, down<br/>
-                            Laughed on the schoolyard<br/>
-                            As soon as I tripped up and hit the ground, ground, ground<br/>
-                            And I would've stuck around for ya<br/>
-                            Would've fought the whole town, so yeah<br/>
-                            Would've been right there front row<br/>
-                            Even if nobody came to your show<br/>
-                            But you showed who you are, then one magical night<br/><br/>
 
-                            I forgot that you existed<br/>
-                            And I thought that it would kill me, but it didn't<br/>
-                            And it was so nice<br/>
-                            So peaceful and quiet<br/><br/>
+                            </span>
+                            <div className="text-sm">
+                                <b className="text-gray-800">@neitiry</b>
 
-                            I forgot that you existed<br/>
-                            It isn't love, it isn't hate<br/>
-                            It's just indifference<br/><br/>
-
-                            I forgot that you<br/>
-                            Sent me a clear message<br/>
-                            Taught me some hard lessons<br/>
-                            I just forget what they were<br/>
-                            It's all just a blur<br/><br/>
-
-                            I forgot that you existed<br/>
-                            And I thought that it would kill me, but it didn't<br/>
-                            And it was so nice<br/>
-                            So peaceful and quiet<br/><br/>
-
-                            I forgot that you existed<br/>
-                            I did, I did, I did<br/>
-                            It isn't hate, it's just indifference<br/>
-                            It isn't love, it isn't hate<br/>
-
+                            </div>
                         </div>
-
+                        <button className="text-gray-500 text-xl">
+                            <FaShare />
+                        </button>
                     </div>
+                    <div className="relative">
+                        <img src="https://getwallpapers.com/wallpaper/full/2/e/2/1100213-amazing-avatar-wallpapers-1920x1080-meizu.jpg" alt="Paisaje" className="w-full h-auto object-cover" />
+                        <div className="absolute bottom-4 left-4 flex space-x-4 text-white">
+                            <button className="bg-gray-800 p-2 rounded-full">
+                                <FaHeart />
+                            </button>
+                            <button className="bg-gray-800 p-2 rounded-full">
+                                <FaRegCommentDots />
+                            </button>
+                            <button className="bg-gray-800 p-2 rounded-full">
+                                <FaShare />
+                            </button>
+                            <button className="bg-gray-800 p-2 rounded-full ml-auto">
+                                <FaRegBookmark />
+                            </button>
+                        </div>
+                    </div>
+                    <div className="p-2">
 
+                        <p className="text-gray-600">
+                            Liked by <b>4GeeksAcademy, HTML5, web</b> and <b>100,000 others</b>
+                        </p>
+                        <p className="text-gray-600 mt-2">
+                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+                        </p>
+                    </div>
                 </div>
 
+
+
+                {/* Segunda Mitad:  */}
+               
+                <div className="absolute top-4 right-4 flex justify-center items-center">
+      <div className="border border-gray-200 rounded-lg shadow-lg overflow-hidden" style={{ width: '20rem' }}>
+        <div className="flex items-center justify-between p-2 bg-gray-100">
+          <div className="flex items-center">
+            <span className="text-gray-500 text-xl mr-2 p-4">
+              <div className="h-20 w-20 text-gray-600 rounded-full overflow-hidden">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path fillRule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clipRule="evenodd" />
+                </svg>
+              </div>
+            </span>
+            <div className="text-sm">
+              <b className="text-gray-800">Jake Sully</b> <br/>
+              <b className="text-gray-800">200 publicaciones</b>
             </div>
-
-         <div className=" flex justify-center items-center">
-         <iframe width="560" height="315" src="https://www.youtube.com/embed/p1cEvNn88jM?si=G9nNZoTTfnmlq4uB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-         </div>
-
-
-
-
-
+          </div>
         </div>
+      </div>
+    </div>
 
-        <div className='border-y-4 flex justify-center items-center py-4 gap-6 shadow'>
-        <div className='flex items-center gap-2 cursor-pointer'>
-                <img src='https://thenoiseperu.com/wp-content/uploads/2022/01/ddiulc3-4e00352f-2724-47da-94cb-8cf91e7f2982.jpg' className='flag h-20 w-20 bg-orange-300 rounded-full top-1 start-1' />
-               <Link to="/lover"><p className="font-bold text-xl">Atrás</p></Link> 
             </div>
 
+            {/* Barra de Salida */}
+            <div className='border-y-4 flex justify-center items-center py-4 gap-6 shadow'>
+                <div onClick={handleLogout} className='flex items-center gap-2 cursor-pointer hover:text-pink-600'>
+                    <div class="h-10 w-10 text-gray-600 rounded-full overflow-hidden ">
 
-        </div >
 
 
 
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
+                        </svg>
 
 
-    </>
-}
+                    </div>
+                    <p className="font-bold text-xl">Log out</p>
+                </div>
+            </div>
+        </div>
+       
+    );
+};
+
