@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			token: null,
 			message: null,
 			demo: [
 				{
@@ -20,6 +21,86 @@ const getState = ({ getStore, getActions, setStore }) => {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
+
+			currentUser: async (token) => {
+				try {
+					const res = await fetch(process.env.BACKEND_URL + "/api/currentUser", {
+						method: "GET",
+
+						headers: {
+							"Access-Control-Allow-Credentials": true,
+							"Authorization": 'Bearer ' + token
+						}
+					});
+					const data = await res.json();
+					if (!res.ok) throw new Error("Invalid credentials");
+
+					return data;
+				} catch (error) {
+					console.error("Error logging in:", error);
+					return false;
+				}
+			},
+
+			createNewUser: async (userInfo) => {
+				try {
+					const res = await fetch(process.env.BACKEND_URL + '/api/register', {
+						method: "POST",
+						body: JSON.stringify(userInfo),
+						headers: {
+							"Content-Type": "application/json"
+						}
+					});
+					if (res.status === 409) {
+						console.error("El usuario ya existe");
+						//return false; 
+					}
+					const data = await res.json();
+					if (!res.ok){
+						throw new Error(data.msg)
+					}  
+					return true; 
+				} catch (error) {
+					console.log(error.message)
+					if (error.message == "Username already exists"){
+						throw new Error(error.message); 
+					}
+					console.log(error.message)
+					console.error("Error al crear un nuevo usuario:", error);
+					return false; 
+				}
+			},
+	
+			login: async (userInfo) => {
+				try {
+					const res = await fetch(process.env.BACKEND_URL + "/api/login", {
+						method: "POST",
+						body: JSON.stringify(userInfo),
+						headers: {
+							"Content-Type": "application/json"
+						}
+					});
+					const data = await res.json();
+					if (!res.ok) throw new Error("Invalid credentials");
+	
+					// Guardar el token en sessionStorage
+					sessionStorage.setItem("userData", JSON.stringify(data));
+	
+					setStore({ userToken: data });
+					return true;
+				} catch (error) {
+					console.error("Error logging in:", error);
+					return false;
+				}
+			},
+	
+			logOut: () => {
+				console.log('out')
+				sessionStorage.clear()
+				setStore({ userToken: "" })
+				window.location.href = '/hero'
+			},
+
 
 			getMessage: async () => {
 				try{
@@ -46,8 +127,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
-			}
-		}
+			},
+
+			
+
+
+		},
+
+		
+
+
+
 	};
 };
 
