@@ -8,8 +8,8 @@ export const Register = () => {
   
   const [userInfo, setUserInfo] = useState({
     name: "",
-    surName: "",
-    userName: "",
+    surname: "",
+    username: "",
     password: "",
   });
 
@@ -22,23 +22,21 @@ export const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(userInfo);
 
-    let registered = null;
-    try {
-      registered = await actions.createNewUser(userInfo);
-    } catch (error) {
-      console.log(error.message);
-      if (error.message === "Username already exists") {
-        alert("Username already exists");
-        return;
-      }
-      alert("An error occurred. Please try again.");
-      return false;
+    if (userInfo.password.length < 5 || userInfo.password.length > 10) {
+      setError("Password must be between 5 and 10 characters");
+      return;
     }
 
-    if (registered) {
-      navigate('/login');
+    try {
+      const registered = await actions.createNewUser(userInfo);
+      if (registered) navigate('/login');
+    } catch (error) {
+      if (error.message === "Username already exists") {
+        alert("Username already exists");
+      } else {
+        alert("Error creating user: " + error.message);
+      }
     }
   };
 
@@ -78,36 +76,36 @@ export const Register = () => {
           </div>
 
           <div className="sm:col-span-3 mt-2">
-            <label htmlFor="surName" className="block text-sm font-medium leading-6 text-gray-900">
+            <label htmlFor="surname" className="block text-sm font-medium leading-6 text-gray-900">
               Surname
             </label>
             <div className="sm:col-span-3">
               <input
-                id="surName"
-                name="surName"
+                id="surname"
+                name="surname"
                 type="text"
-                autoComplete="surName"
+                autoComplete="surname"
                 required
                 onChange={handleChange}
-                value={userInfo.surName}
+                value={userInfo.surname}
                 className="shadow-md block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
 
           <div className="sm:col-span-3 mt-2">
-            <label htmlFor="userName" className="block text-sm font-medium leading-6 text-gray-900">
+            <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
               Username
             </label>
             <div className="sm:col-span-3">
               <input
-                id="userName"
-                name="userName"
+                id="username"
+                name="username"
                 type="text"
-                autoComplete="userName"
+                autoComplete="username"
                 required
                 onChange={handleChange}
-                value={userInfo.userName}
+                value={userInfo.username}
                 className="shadow-md block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>

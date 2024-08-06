@@ -28,13 +28,6 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-@api.route('/users', methods=['GET'])
-def get_users():
-    users = User.query.all()
-    users = list(map(lambda x: x.serialize(), users))
-    return jsonify(users), 200
-
-
 
 @api.route('/register', methods=['POST'])
 def create_user():
@@ -44,25 +37,26 @@ def create_user():
     if not request_body:
         return jsonify({"msg": "No data provided"}), 400
 
-    user_name = request_body.get('user_name')
+    username = request_body.get('username')
     password = request_body.get('password')
-    sur_name = request_body.get('sur_name')
     name = request_body.get('name')
+    surname = request_body.get('surname')
 
-    # Verificar si se proporcionaron username, contraseña, ame y surname
-    if not user_name:
-        return jsonify({'msg': 'Username required'}), 400
+    # Verificar si se proporcionaron correo electrónico, contraseña, first_name y last_name
+    if not username:
+        return jsonify({'msg': 'username required'}), 400
 
     if not password:
         return jsonify({'msg': 'Password required'}), 400
-    
-    if not name or not sur_name:
-        return jsonify({'msg': 'Name and surname required'}), 400
 
+    if not name or not surname:
+        return jsonify({'msg': 'First name and last name required'}), 400
     
+    if len(password) < 5 or len(password) > 10:
+        return jsonify({'msg': 'Password must be between 5 and 10 characters'}), 400
 
-    # Verificar si el username ya está registrado
-    existing_user = User.query.filter_by(user_name=user_name).first()
+    # Verificar si el correo electrónico ya está registrado
+    existing_user = User.query.filter_by(username=username).first()
     if existing_user:
         return jsonify({'msg': 'Username already exists'}), 409
 
@@ -72,7 +66,7 @@ def create_user():
         hash_password = bcrypt.hashpw(password.encode('utf-8'), salt)
 
         # Crear un nuevo usuario
-        new_user = User(user_name=user_name, password=hash_password.decode('utf-8'), salt=salt.decode('utf-8'), name=name, sur_name=sur_name)
+        new_user = User(username=username, password=hash_password.decode('utf-8'), salt=salt.decode('utf-8'), name=name, surname=surname)
         db.session.add(new_user)
         db.session.commit()
 
@@ -82,6 +76,8 @@ def create_user():
         # Revertir la transacción en caso de error
         db.session.rollback()
         return jsonify({"msg": "Error creating user", "error": str(e)}), 400
+
+
 
 
 
@@ -113,3 +109,40 @@ def login():
             return jsonify({'msg': 'wrong password'}), 404
     else:
         return jsonify({'msg': 'user not found'}), 404
+    
+
+from flask import request, jsonify
+from flask_jwt_extended import create_access_token
+import bcrypt
+
+@api.route('/login', methods=['POST'])
+def login():
+    try:
+        # Obtener el nombre de usuario y la contraseña del cuerpo de la solicitud
+        username = request.json.get('username')
+        password = request.json.get('password')
+
+        # Verificar si se proporcionaron el nombre de usuario y la contraseña
+        if not username or not password:
+            return jsonify({'msg': 'Username and password required'}), 400
+
+        # Buscar el usuario en la base de datos
+        user = User.query.filter_by(username=username).one_or_none()
+
+        # Verificar si el usuario existe
+        if user is not None:
+            # Verificar la contraseña
+            check = bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8'))
+            if check:
+                # Crear el token de acceso
+                access_token = create_access_token(identity=username)
+                # Devolver el token y la información del usuario
+                return jsonify({'token': access_token, 'identity': user.serialize()}), 200
+            else:
+                return jsonify({'msg': 'Wrong password'}), 401
+        else:
+            return jsonify({'msg': 'User not found'}), 404
+
+    except Exception as e:
+        # Manejar excepciones generales
+        return jsonify({'msg': 'An error occurred', 'error': str(e)}), 500

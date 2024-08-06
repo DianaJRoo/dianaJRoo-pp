@@ -18,30 +18,25 @@ likes = db.Table('likes',
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    avatar = db.Column(db.String(120), unique=False, nullable=False)
-    name = db.Column(db.String(20), unique=False, nullable=False)
-    sur_name = db.Column(db.String(20), unique=False, nullable=False)
-    user_name = db.Column(db.String(10), unique=False, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    salt = db.Column(db.String(90), unique=False, nullable=False)
+    avatar = db.Column(db.String(120), nullable=True)
+    name = db.Column(db.String(20),  nullable=False)
+    surname = db.Column(db.String(20),  nullable=False)
+    username = db.Column(db.String(10), unique=False, nullable=False)
+    password = db.Column(db.String(80), nullable=False)
+    salt = db.Column(db.String(90),  nullable=False)
 
 
     def __repr__(self):
         return f'<User {self.id}>'
 
-    def __init__(self, avatar, name, sur_name, user_name, password, salt):
-        self.avatar = avatar
+    def __init__(self, name, surname, username, password, salt):
+        
         self.name = name
-        self.sur_name = sur_name
-        self.user_name = user_name
+        self.surname = surname
+        self.username = username
         self.salt = salt
-        self.set_password(password)
-
-    def set_password(self, password):
-        if len(password) < 5 or len(password) > 10:
-            raise ValueError("Password must be between 5 and 10 characters")
         self.password = password
+
 
     def serialize(self):
         return {
@@ -49,8 +44,8 @@ class User(db.Model):
             "id": self.id,
             "avatar": self.avatar,
             "name": self.name,
-            "sur_name": self.sur_name,
-            "user_name": self.user_name,
+            "surname": self.surname,
+            "username": self.username,
             # do not serialize the password, its a security breach
         }
     

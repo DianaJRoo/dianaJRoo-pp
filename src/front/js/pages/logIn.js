@@ -18,7 +18,7 @@ export const LogIn = () => {
     const handleLogin = async (e) => {
         e.preventDefault()
         const logged = await actions.login(userInfo)
-        if (logged) navigate(``)
+        if (logged) navigate(`/sesion`)
         else setError(true)
     }
 
@@ -47,7 +47,7 @@ export const LogIn = () => {
                             <input
                                 className="my-3  block w-full h-10 px-2 py-1 border border-gray-300 rounded-md font-overpass text-base text-gray-700 focus:outline-none focus:border-pink-500"
                                 type="password"
-                                placeholder= "Password"
+                                placeholder= "password"
                                 name="password"
                                 required
                                 onChange={handleChange}
@@ -64,7 +64,7 @@ export const LogIn = () => {
                         >
                             Log in
                         </button><br />
-                        {error && <small>invalid email or password</small>}
+                       
 
                         <div className="text-wrap text-xs text-center" style={{ maxWidth: "300px" }}>
                             <p>
@@ -77,7 +77,7 @@ export const LogIn = () => {
 
                     </form>
                     <div className="pie-form flex justify-center ">
-                        {/* <Link className="mt-4 text-pink-900" to="">Perdiste tu contraseña</Link><br /> */}
+                     
                         <Link className="mt-2 text-pink-900" to="/register"> <strong>¿Need an account? Register</strong></Link>
                     </div>
 

@@ -36,7 +36,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			
 			currentUser: async (token) => {
-
 				try {
 					const res = await fetch(process.env.BACKEND_URL + "/api/currentUser", {
 						method: "GET",
@@ -120,7 +119,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			createNewUser: async (userInfo) => {
 				try {
-					const res = await fetch(`${process.env.BACKEND_URL}/api/register`, {
+					const res = await fetch(process.env.BACKEND_URL + '/api/register', {
 						method: "POST",
 						body: JSON.stringify(userInfo),
 						headers: {
@@ -138,7 +137,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return true; 
 				} catch (error) {
 					console.log(error.message)
-					if (error.message == "Username already exists" ){
+					if (error.message == "Username already exists"){
 						throw new Error(error.message); 
 					}
 					console.log(error.message)
